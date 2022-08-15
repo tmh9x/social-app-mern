@@ -28,8 +28,8 @@ const addMiddleware = () => {
 };
 
 const loadRoutes = () => {
-  app.use("/api", postsRouter, usersRouter);
-  /* app.use("/api", usersRouter); */
+  app.use("/api/posts", postsRouter);
+  app.use("/api/users", usersRouter);
 };
 
 const mongoDbConnection = async () => {

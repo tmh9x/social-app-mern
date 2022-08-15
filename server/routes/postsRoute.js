@@ -3,6 +3,6 @@ import { getAllPosts } from "../controllers/postsController.js";
 
 const router = express.Router();
 
-router.get("/posts", getAllPosts);
+router.get("/all", getAllPosts);
 
 export default router;

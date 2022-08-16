@@ -1,10 +1,11 @@
 import * as dotenv from "dotenv";
 
+import { cloudinaryConfig } from "./config/cloudinaryConfig.js";
 import cors from "cors";
 import express from "express";
 import mongoose from "mongoose";
-import postsRouter from "./routes/postsRoute.js";
-import usersRouter from "./routes/usersRoute.js";
+import postsRoute from "./routes/postsRoute.js";
+import usersRoute from "./routes/usersRoute.js";
 
 dotenv.config();
 
@@ -25,11 +26,12 @@ const addMiddleware = () => {
     })
   );
   app.use(cors());
+  cloudinaryConfig();
 };
 
 const loadRoutes = () => {
-  app.use("/api/posts", postsRouter);
-  app.use("/api/users", usersRouter);
+  app.use("/api/posts", postsRoute);
+  app.use("/api/users", usersRoute);
 };
 
 const mongoDbConnection = async () => {

@@ -1,0 +1,18 @@
+h1 {
+  font-family: "Noto Serif", serif;
+  text-shadow: 3px 3px grey;
+  padding-bottom: 1.5em;
+}
+
+.button-pos {
+  display: flex;
+  flex-direction: column;
+  gap: 2em;
+}
+
+.home-container {
+  padding: 1em;
+  height: 100%;
+  display: grid;
+  align-content: center;
+}

@@ -14,7 +14,7 @@ export default function Home() {
             <Button
               component={Link}
               to="/login"
-              style={{ width: "200px", backgroundColor: "rgba(0, 0, 0, 70%)" }}
+              style={{ width: "200px" }}
               variant="contained"
             >
               login
@@ -24,7 +24,7 @@ export default function Home() {
             <Button
               component={Link}
               to="/register"
-              style={{ width: "200px", backgroundColor: "rgba(0, 0, 0, 70%)" }}
+              style={{ width: "200px" }}
               variant="contained"
             >
               register

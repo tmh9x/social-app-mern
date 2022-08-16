@@ -1,6 +1,6 @@
 import "./App.css";
 
-import { Route, Routes, useLocation } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 
 import { BgColorContextProvider } from "./contexts/bgColorContext";
 import HomeView from "./views/HomeView/HomeView";

@@ -1,0 +1,12 @@
+.posts-container {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 2em;
+  border-bottom: 1px grey solid;
+}
+
+.posts-container-image {
+  background-color: grey;
+  width: 390px;
+  height: 390px;
+}

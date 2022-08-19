@@ -17,10 +17,10 @@ export default function Posts() {
       {posts &&
         posts.map((post, index) => (
           <div key={index} className="posts-container">
-            <div>{post._id}</div>
+            <p>{post._id}</p>
             <div className="posts-container-image"></div>
-            <div>s{post.description}</div>
-            <div>s{post.likes}</div>
+            <p>{post.description}</p>
+            <p>{post.likes}</p>
           </div>
         ))}
     </div>

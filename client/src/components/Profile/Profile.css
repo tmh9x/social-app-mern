@@ -1,0 +1,21 @@
+.profile-container {
+  padding: 1em;
+  height: 100%;
+  position: relative;
+  top: 50px;
+}
+
+.profile-container-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+}
+
+.profile-container-image {
+  margin: 0 auto;
+  justify-self: center;
+  border: 1px solid black;
+  border-radius: 50%;
+  height: 150px;
+  width: 150px;
+}

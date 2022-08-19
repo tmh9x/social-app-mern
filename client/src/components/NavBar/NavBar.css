@@ -1,10 +1,20 @@
 .navbar-container {
-  height: 80px;
-  background-color: black;
-  color: white;
-  margin-bottom: 1em;
-  display: flex;
-  justify-content: center;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
   align-items: center;
-  font-family: "Noto Serif", serif;
+  justify-items: center;
+  height: 50px;
+  padding: 10px;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background-color: white;
+  z-index: 1;
+  border-top: 1px solid grey;
+}
+
+.navbar-container a {
+  margin-right: 1em;
+  text-decoration: none;
+  color: black;
 }

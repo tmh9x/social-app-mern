@@ -1,0 +1,46 @@
+.appbar-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  height: 50px;
+  align-items: center;
+  font-family: "Noto Serif", serif;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background-color: white;
+  z-index: 1;
+  border-bottom: 1px solid grey;
+  font-family: "Dancing Script", cursive;
+}
+
+.appbar-container h2 {
+  font-size: 1.8em;
+}
+
+.appbar-container-img {
+  border: 1px solid black;
+  border-radius: 50%;
+  height: 40px;
+  width: 40px;
+}
+
+.appbar-container-online-status {
+  justify-self: end;
+  margin-right: 1em;
+  background-color: greenyellow;
+  border-radius: 50%;
+  width: 10px;
+  height: 10px;
+}
+
+.appbar-container-chat-link {
+  display: flex;
+  justify-content: end;
+}
+
+.appbar-container-chat-link a {
+  margin-right: 1em;
+  text-decoration: none;
+  color: black;
+  justify-self: end;
+}

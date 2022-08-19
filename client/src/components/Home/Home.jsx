@@ -23,11 +23,11 @@ export default function Home() {
           <div>
             <Button
               component={Link}
-              to="/register"
+              to="/signup"
               style={{ width: "200px" }}
               variant="contained"
             >
-              register
+              Sign Up
             </Button>
           </div>
         </div>

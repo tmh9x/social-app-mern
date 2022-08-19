@@ -1,12 +1,10 @@
 import "./Login.css";
 
-import { Link, TextField } from "@mui/material";
+import { Link, useNavigate } from "react-router-dom";
 import React, { useContext, useState } from "react";
 
-/* import BackButton from "../BackButton/BackButton"; */
 import Button from "@mui/material/Button";
-/* import { authContext } from "../../contexts/authContext"; */
-import { useNavigate } from "react-router-dom";
+import { TextField } from "@mui/material";
 
 export default function Login() {
   /*   const { login } = useContext(authContext); */
@@ -68,7 +66,7 @@ export default function Login() {
       <div>
         <p>
           <span>Need an Account? </span>
-          <Link href="signup" underline="hover">
+          <Link to="/signup" underline="hover">
             Sign Up
           </Link>
         </p>

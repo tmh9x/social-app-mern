@@ -1,5 +1,3 @@
-import "./LoginView.css";
-
 import React, { useContext, useEffect } from "react";
 
 import Login from "../../components/Login/Login";
@@ -23,7 +21,7 @@ export default function LoginView() {
   }, []);
 
   return (
-    <div className="login-container" style={{ background: bgColor }}>
+    <div className="loginView-container" style={{ background: bgColor }}>
       <Login />
     </div>
   );

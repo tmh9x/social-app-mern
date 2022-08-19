@@ -7,3 +7,18 @@
   align-content: center;
   gap: 20px;
 }
+
+.upload-container {
+  background-color: white;
+  border: 1px solid black;
+  border-radius: 5px;
+  padding: 10px;
+  width: 250px;
+  margin: 0 auto;
+}
+
+#upload::-webkit-file-upload-button {
+  background-color: white;
+  padding: 0.5em;
+  border-radius: 5px;
+}

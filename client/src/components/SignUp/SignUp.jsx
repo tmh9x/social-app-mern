@@ -3,8 +3,8 @@ import "./SignUp.css";
 import React, { useState } from "react";
 
 import Button from "@mui/material/Button";
+import { Link } from "react-router-dom";
 import { TextField } from "@mui/material";
-import Upload from "../../assets/upload.png";
 
 export default function SignUp() {
   const [selectedFile, setSelectedFile] = useState(null);
@@ -110,16 +110,20 @@ export default function SignUp() {
       </div>
       <div>
         <form>
-          <div>
+          <div className="upload-container">
             <label for="upload">
-              <img src={Upload} alt="" width="70px" />
+              {/*  <img src={Upload} alt="" width="70px" /> */}
             </label>
             <input
               id="upload"
               type="file"
               onChange={handleFile}
-              style={{ display: "none" }}
+
+              /*  style={{ display: "none" }} */
             />
+            {newUser.avatarPicture && (
+              <img src={newUser.avatarPicture} alt="userPic" width="100px" />
+            )}
           </div>
           <div>
             <Button variant="outlined" size="small" onClick={submitForm}>
@@ -127,9 +131,6 @@ export default function SignUp() {
             </Button>
           </div>
         </form>
-        {newUser.avatarPicture && (
-          <img src={newUser.avatarPicture} alt="userPic" width="250px" />
-        )}
       </div>
       <div>
         <Button
@@ -140,6 +141,9 @@ export default function SignUp() {
         >
           Sign Up
         </Button>
+      </div>
+      <div>
+        <Link to="/">Go Back</Link>
       </div>
     </div>
   );

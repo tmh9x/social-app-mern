@@ -1,10 +1,11 @@
 import "./AppBar.css";
 
+import React, { useState } from "react";
+
 import Box from "@mui/material/Box";
 import CloseIcon from "@mui/icons-material/Close";
 import Divider from "@mui/material/Divider";
 import { IconButton } from "@mui/material";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
 import { Link } from "react-router-dom";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
@@ -13,14 +14,12 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import LogoutIcon from "@mui/icons-material/Logout";
 import MenuIcon from "@mui/icons-material/Menu";
-import React from "react";
 import SendIcon from "@mui/icons-material/Send";
-import SendOutlinedIcon from "@mui/icons-material/SendOutlined";
 import SettingsIcon from "@mui/icons-material/Settings";
 import SwipeableDrawer from "@mui/material/SwipeableDrawer";
 
 export default function NavBar() {
-  const [state, setState] = React.useState({
+  const [state, setState] = useState({
     top: false,
   });
 

@@ -30,6 +30,12 @@ const encryptPassword = async (password) => {
 };
 
 const signUp = async (req, res) => {
+  console.log({
+    userName: req.body.userName,
+    email: req.body.email,
+    birthday: req.body.birthday,
+    avatarPicture: req.body.avatarPicture,
+  });
   try {
     const existingUser = await usersModel.findOne({ email: req.body.email });
     if (existingUser) {
@@ -41,6 +47,7 @@ const signUp = async (req, res) => {
         userName: req.body.userName,
         email: req.body.email,
         password: hashedPassword,
+        birthday: req.body.birthday,
         avatarPicture: req.body.avatarPicture,
       });
 
@@ -50,6 +57,7 @@ const signUp = async (req, res) => {
           user: {
             userName: savedUser.userName,
             email: savedUser.email,
+            birthday: savedUser.birthday,
             avatarPicture: savedUser.avatarPicture,
           },
           msg: "User Registered successfully",

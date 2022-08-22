@@ -14,6 +14,10 @@ const usersSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  birthday: {
+    type: Date,
+    required: false,
+  },
   avatarPicture: {
     type: String,
   },

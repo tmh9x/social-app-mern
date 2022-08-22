@@ -44,6 +44,8 @@ export default function SignUp() {
     urlencoded.append("userName", newUser.userName);
     urlencoded.append("email", newUser.email);
     urlencoded.append("password", newUser.password);
+    urlencoded.append("birthday", newUser.birthday);
+    console.log("newUser.birthday", newUser.birthday);
     urlencoded.append(
       "avatarPicture",
       newUser.avatarPicture
@@ -106,6 +108,16 @@ export default function SignUp() {
           onChange={handleChange}
           value={newUser.password ? newUser.password : ""}
           required
+        />
+      </div>
+      <div>
+        <TextField
+          id="birthday"
+          variant="standard"
+          name="birthday"
+          type="date"
+          onChange={handleChange}
+          value={newUser.birthday ? newUser.birthday : ""}
         />
       </div>
       <div>

@@ -8,7 +8,7 @@ export default function CreatePost() {
   return (
     <div className="createpost-container">
       <div>
-        <h2>Tell your Story</h2>
+        <h2>Create your Story</h2>
       </div>
       <div>
         <input type="file" name="post" id="post" />
@@ -21,7 +21,7 @@ export default function CreatePost() {
         ></TextareaAutosize>
       </div>
       <div>
-        <Button variant="contained">send</Button>
+        <Button variant="contained">post</Button>
       </div>
     </div>
   );

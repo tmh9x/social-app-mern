@@ -1,14 +1,15 @@
 import "./SignUp.css";
 
+import { Alert, TextField } from "@mui/material";
 import React, { useState } from "react";
 
 import Button from "@mui/material/Button";
 import { Link } from "react-router-dom";
-import { TextField } from "@mui/material";
 
 export default function SignUp() {
   const [selectedFile, setSelectedFile] = useState(null);
   const [newUser, setNewUser] = useState({});
+  const [showAlert, setShowAlert] = useState();
 
   const handleFile = (e) => {
     setSelectedFile(e.target.files[0]);
@@ -42,10 +43,12 @@ export default function SignUp() {
   const signUp = async () => {
     let urlencoded = new URLSearchParams();
     urlencoded.append("userName", newUser.userName);
+    urlencoded.append("firstName", newUser.firstName);
+    urlencoded.append("lastName", newUser.lastName);
     urlencoded.append("email", newUser.email);
     urlencoded.append("password", newUser.password);
     urlencoded.append("birthday", newUser.birthday);
-    console.log("newUser.birthday", newUser.birthday);
+
     urlencoded.append(
       "avatarPicture",
       newUser.avatarPicture
@@ -64,6 +67,7 @@ export default function SignUp() {
       );
       const results = await response.json();
       console.log("results", results);
+      setShowAlert(results);
     } catch (error) {
       console.log("error", error);
     }
@@ -71,6 +75,18 @@ export default function SignUp() {
 
   return (
     <div className="signup-container">
+      {showAlert && (
+        <div>
+          <Alert severity={showAlert.success ? "success" : "error"}>
+            {showAlert.message}
+            {showAlert.success && (
+              <div>
+                Please <Link to="/login">log in </Link>to your Account.
+              </div>
+            )}
+          </Alert>
+        </div>
+      )}
       <div>
         <h2>Sign Up</h2>
       </div>
@@ -83,6 +99,30 @@ export default function SignUp() {
           type="text"
           onChange={handleChange}
           value={newUser.userName ? newUser.userName : ""}
+          required
+        />
+      </div>
+      <div>
+        <TextField
+          id="firstName"
+          label="Firstname"
+          variant="standard"
+          name="firstName"
+          type="text"
+          onChange={handleChange}
+          value={newUser.firstName ? newUser.firstName : ""}
+          required
+        />
+      </div>
+      <div>
+        <TextField
+          id="lastName"
+          label="Lastname"
+          variant="standard"
+          name="lastName"
+          type="text"
+          onChange={handleChange}
+          value={newUser.lastName ? newUser.lastName : ""}
           required
         />
       </div>
@@ -123,7 +163,7 @@ export default function SignUp() {
       <div>
         <form>
           <div className="upload-container">
-            <label for="upload">
+            <label htmlFor="upload">
               {/*  <img src={Upload} alt="" width="70px" /> */}
             </label>
             <input

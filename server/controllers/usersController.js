@@ -1,7 +1,7 @@
+import User from "../models/usersModel.js";
 import bcrypt from "bcrypt";
 import { v2 as cloudinary } from "cloudinary";
 import { issueToken } from "../utils/jwt.js";
-import usersModel from "../models/usersModel.js";
 import { verifyPassword } from "../utils/encryptPassword.js";
 
 const uploadUserPicture = async (req, res) => {
@@ -34,60 +34,77 @@ const encryptPassword = async (password) => {
 const signUp = async (req, res) => {
   console.log({
     userName: req.body.userName,
+    firstName: req.body.firstName,
+    lastName: req.body.lastName,
     email: req.body.email,
     birthday: req.body.birthday,
     avatarPicture: req.body.avatarPicture,
+    password: req.body.password,
   });
   try {
-    const existingUser = await usersModel.findOne({ email: req.body.email });
+    if (req.body.userName === "undefined" || req.body.email === "undefined") {
+      res.status(409).json({ success: false, message: "fill all fields" });
+    }
+
+    const existingUser = await User.findOne({ email: req.body.email });
     if (existingUser) {
       res.status(409).json({ message: "user already exists" });
     } else {
       const hashedPassword = await encryptPassword(req.body.password);
 
-      const newUser = new usersModel({
+      const newUser = new User({
         userName: req.body.userName,
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
         email: req.body.email,
         password: hashedPassword,
         birthday: req.body.birthday,
         avatarPicture: req.body.avatarPicture,
       });
+      console.log("newUser>>>>", newUser);
 
       try {
         const savedUser = await newUser.save();
         res.status(201).json({
           user: {
             userName: savedUser.userName,
+            firstName: savedUser.firstName,
+            lastName: savedUser.lastName,
             email: savedUser.email,
             birthday: savedUser.birthday,
             avatarPicture: savedUser.avatarPicture,
           },
-          msg: "User Registered successfully",
+          message: "User Registered successfully",
+          success: true,
         });
       } catch (error) {
-        res
-          .status(409)
-          .json({ message: "error while saving new user", error: error });
+        res.status(409).json({
+          success: false,
+          message: error.message,
+          error: error,
+        });
       }
     }
   } catch (error) {
-    res
-      .status(401)
-      .json({ message: "registration not possible", error: error });
+    res.status(401).json({
+      success: false,
+      message: error.message,
+      error: error,
+    });
   }
 };
 
 const login = async (req, res) => {
-  const existingUser = await usersModel.findOne({ email: req.body.email });
+  const existingUser = await User.findOne({ email: req.body.email });
   if (!existingUser) {
-    res.status(401).json({ msg: "user not found" });
+    res.status(401).json({ message: "user not found" });
   } else {
     const verified = await verifyPassword(
       req.body.password,
       existingUser.password
     );
     if (!verified) {
-      res.status(401).json({ msg: "password is incorrect" });
+      res.status(401).json({ message: "password is incorrect" });
     } else {
       console.log("you are logged in");
       const token = issueToken(existingUser.id);
@@ -106,4 +123,38 @@ const login = async (req, res) => {
   }
 };
 
-export { uploadUserPicture, signUp, login };
+const getProfile = (req, res) => {
+  console.log("req", req.user);
+  res.status(200).json({
+    firstName: req.user.firstName,
+    lastName: req.user.lastName,
+    email: req.user.email,
+    userName: req.user.userName,
+    avatarPicture: req.user.avatarPicture,
+  });
+};
+
+// UPDATE A USER BY ID
+
+const updateUser = async (req, res) => {
+  console.log("req.user", req.user);
+  try {
+    const updatedUser = await User.findByIdAndUpdate(req.user.id, {
+      userName: req.body.userName,
+      firstName: req.body.firstName,
+      lastName: req.body.lastName,
+      email: req.body.email,
+      birthday: req.body.birthday,
+    });
+    console.log("updatedUser: ", updatedUser);
+    res.status(200).json({
+      message: "Congratulations.",
+    });
+  } catch (catchError) {
+    res.status(409).json({
+      message: catchError,
+    });
+  }
+};
+
+export { uploadUserPicture, signUp, login, getProfile, updateUser };

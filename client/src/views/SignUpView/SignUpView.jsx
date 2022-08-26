@@ -23,7 +23,7 @@ export default function RegisterView() {
   }, []);
 
   return (
-    <div className="signup-container" style={{ background: bgColor }}>
+    <div className="signupview-container" style={{ background: bgColor }}>
       <SignUp />
     </div>
   );

@@ -1,6 +1,6 @@
 import "./AppBar.css";
 
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 
 import Box from "@mui/material/Box";
 import CloseIcon from "@mui/icons-material/Close";
@@ -17,8 +17,11 @@ import MenuIcon from "@mui/icons-material/Menu";
 import SendIcon from "@mui/icons-material/Send";
 import SettingsIcon from "@mui/icons-material/Settings";
 import SwipeableDrawer from "@mui/material/SwipeableDrawer";
+import { authContext } from "../../contexts/authContext";
 
 export default function NavBar() {
+  const { logout } = useContext(authContext);
+
   const [state, setState] = useState({
     top: false,
   });
@@ -43,16 +46,16 @@ export default function NavBar() {
       onKeyDown={toggleDrawer(anchor, false)}
     >
       <List>
-        <ListItem disablePadding>
-          <Link to="/chat">
+        <Link to="/chat">
+          <ListItem disablePadding>
             <ListItemButton>
               <ListItemIcon>
                 <SendIcon />
               </ListItemIcon>
               <ListItemText primary="Chat" />
             </ListItemButton>
-          </Link>
-        </ListItem>
+          </ListItem>
+        </Link>
         <ListItem disablePadding>
           <ListItemButton>
             <ListItemIcon>
@@ -63,7 +66,7 @@ export default function NavBar() {
         </ListItem>
         <Divider />
         <ListItem disablePadding>
-          <ListItemButton>
+          <ListItemButton onClick={logout}>
             <ListItemIcon>
               <LogoutIcon />
             </ListItemIcon>

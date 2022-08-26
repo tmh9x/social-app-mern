@@ -3,7 +3,15 @@ import mongoose from "mongoose";
 const usersSchema = new mongoose.Schema({
   userName: {
     type: String,
-    required: true,
+    required: false,
+  },
+  firstName: {
+    type: String,
+    required: false,
+  },
+  lastName: {
+    type: String,
+    required: false,
   },
   email: {
     type: String,
@@ -16,10 +24,11 @@ const usersSchema = new mongoose.Schema({
   },
   birthday: {
     type: Date,
-    required: false,
+    required: true,
   },
   avatarPicture: {
     type: String,
+    required: false,
   },
 });
 

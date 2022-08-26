@@ -13,13 +13,13 @@ const getAllPosts = async (req, res) => {
     if (error === "xyz") {
       res.status(500).json({
         error: error,
-        msg: "wrong url",
+        message: error.message,
       });
     }
 
     res.status(500).json({
       error: error,
-      msg: "server failed",
+      message: error.message,
     });
   }
 };

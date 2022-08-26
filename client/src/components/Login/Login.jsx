@@ -1,29 +1,44 @@
 import "./Login.css";
 
 import { Link, useNavigate } from "react-router-dom";
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 
 import Button from "@mui/material/Button";
 import { TextField } from "@mui/material";
 
 export default function Login() {
-  /*   const { login } = useContext(authContext); */
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [userLogin, setUserLogin] = useState({});
 
   let navigate = useNavigate();
 
-  const handleEmailChange = (e) => {
-    setEmail(e.target.value);
+  const handleChange = (e) => {
+    setUserLogin({ ...userLogin, [e.target.name]: e.target.value });
   };
 
-  const handlePasswordChange = (e) => {
-    setPassword(e.target.value);
-  };
+  const login = async () => {
+    var urlencoded = new URLSearchParams();
+    urlencoded.append("email", userLogin.email);
+    urlencoded.append("password", userLogin.password);
 
-  const handleLogin = () => {
-    login(email, password);
-    navigate("/characters");
+    var requestOptions = {
+      method: "POST",
+      body: urlencoded,
+    };
+    try {
+      const response = await fetch(
+        "http://localhost:5000/api/users/login",
+        requestOptions
+      );
+      const result = await response.json();
+      const { token, user } = result;
+      console.log("log in successful", result);
+      if (token) {
+        localStorage.setItem("token", token);
+        navigate("/posts");
+      }
+    } catch (error) {
+      console.log("error during login", error);
+    }
   };
 
   return (
@@ -36,9 +51,10 @@ export default function Login() {
           id="email"
           label="Email"
           variant="standard"
+          name="email"
           type="email"
-          onChange={handleEmailChange}
-          value={email}
+          onChange={handleChange}
+          value={userLogin.email ? userLogin.email : ""}
           required
         />
       </div>
@@ -47,9 +63,10 @@ export default function Login() {
           id="password"
           label="Password"
           variant="standard"
+          name="password"
           type="password"
-          onChange={handlePasswordChange}
-          value={password}
+          onChange={handleChange}
+          value={userLogin.password ? userLogin.password : ""}
           required
         />
       </div>
@@ -58,7 +75,7 @@ export default function Login() {
           type="button"
           color="primary"
           variant="contained"
-          onClick={handleLogin}
+          onClick={login}
         >
           Log In
         </Button>

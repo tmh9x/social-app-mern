@@ -4,6 +4,8 @@ import { cloudinaryConfig } from "./config/cloudinaryConfig.js";
 import cors from "cors";
 import express from "express";
 import mongoose from "mongoose";
+import passport from "passport";
+import { passportConfig } from "./config/passport.js";
 import postsRoute from "./routes/postsRoute.js";
 import usersRoute from "./routes/usersRoute.js";
 
@@ -27,6 +29,8 @@ const addMiddleware = () => {
   );
   app.use(cors());
   cloudinaryConfig();
+  app.use(passport.initialize());
+  passportConfig(passport);
 };
 
 const loadRoutes = () => {

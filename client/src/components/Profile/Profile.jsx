@@ -7,14 +7,9 @@ import { formatDataYyMmDd } from "../../utils/formatDate";
 import { getToken } from "../../utils/getToken";
 
 export default function Profile() {
-  /* const [selectedFile, setSelectedFile] = useState(null); */
   const [newUser, setNewUser] = useState({});
   const [error, setError] = useState(null);
   const [disabled, setDisabled] = useState(false);
-
-  /*   const handleFile = (e) => {
-    setSelectedFile(e.target.files[0]);
-  }; */
 
   const handleChange = (e) => {
     console.log(`Typed => ${e.target.value}`);

@@ -55,7 +55,7 @@ export default function SignUp() {
         ? newUser.avatarPicture
         : "https://www.kindpng.com/picc/m/24-248253_user-profile-default-image-png-clipart-png-download.png"
     );
-    var requestOptions = {
+    const requestOptions = {
       method: "POST",
       body: urlencoded,
     };
@@ -179,7 +179,7 @@ export default function SignUp() {
           </div>
           <div>
             <Button variant="outlined" size="small" onClick={submitForm}>
-              Upload Image
+              upload
             </Button>
           </div>
         </form>

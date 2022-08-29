@@ -1,16 +1,20 @@
 import mongoose from "mongoose";
 
-const postsSchema = new mongoose.Schema({
-  image: {
-    type: String,
+const postsSchema = new mongoose.Schema(
+  {
+    postPicture: {
+      type: String,
+      required: true,
+    },
+
+    description: {
+      type: String,
+    },
   },
-  description: {
-    type: String,
-  },
-  likes: {
-    type: Number,
-  },
-});
+  {
+    timestamps: true,
+  }
+);
 
 const Post = mongoose.model("post", postsSchema);
 

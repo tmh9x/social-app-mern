@@ -2,14 +2,16 @@ import "./Posts.css";
 
 import React, { useContext, useEffect } from "react";
 
+import { formatDataYyMmDd } from "../../utils/formatDate";
 import { postsContext } from "../../contexts/postsContext";
 
 export default function Posts() {
-  const { posts, getPosts } = useContext(postsContext);
+  const { posts, getAllPosts } = useContext(postsContext);
 
-  console.log("posts", posts);
+  console.log("POSTS", posts);
+
   useEffect(() => {
-    getPosts();
+    getAllPosts();
   }, []);
 
   return (
@@ -18,9 +20,11 @@ export default function Posts() {
         posts.map((post, index) => (
           <div key={index} className="posts-container">
             <p>{post._id}</p>
-            <div className="posts-container-image"></div>
+            <div className="posts-container-image">
+              <img src={post.postPicture} alt="" width="390px" />
+            </div>
+            <p>{formatDataYyMmDd(post.createdAt)}</p>
             <p>{post.description}</p>
-            <p>{post.likes}</p>
           </div>
         ))}
     </div>

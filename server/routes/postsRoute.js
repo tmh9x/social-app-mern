@@ -1,8 +1,17 @@
+import {
+  createPost,
+  getPosts,
+  uploadPostPicture,
+} from "../controllers/postsController.js";
+
 import express from "express";
-import { getAllPosts } from "../controllers/postsController.js";
+import { multerUploads } from "../middlewares/multer.js";
 
 const router = express.Router();
 
-router.get("/all", getAllPosts);
+router.get("/all", getPosts);
+
+router.post("/imageUpload", multerUploads.single("image"), uploadPostPicture);
+router.post("/createPost", createPost);
 
 export default router;

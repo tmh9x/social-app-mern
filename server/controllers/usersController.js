@@ -7,7 +7,7 @@ import { verifyPassword } from "../utils/encryptPassword.js";
 const uploadUserPicture = async (req, res) => {
   try {
     const uploadResult = await cloudinary.uploader.upload(req.file.path, {
-      folder: "social-app-mern",
+      folder: "social-app-mern/users",
     });
     res.status(200).json({
       message: "Image Upload successfull",

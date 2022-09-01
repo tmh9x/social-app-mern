@@ -7,6 +7,8 @@ export const authContext = createContext();
 
 export function AuthContextProvider(props) {
   const [user, setUser] = useState();
+  const [newUser, setNewUser] = useState({});
+  const [error, setError] = useState(null);
 
   let navigate = useNavigate();
 
@@ -27,12 +29,48 @@ export function AuthContextProvider(props) {
     navigate("/");
   };
 
+  const getProfile = async () => {
+    const token = getToken();
+    if (token) {
+      const myHeaders = new Headers();
+      myHeaders.append("Authorization", `Bearer ${token}`);
+
+      const requestOptions = {
+        method: "GET",
+        headers: myHeaders,
+      };
+
+      try {
+        const response = await fetch(
+          "http://localhost:5000/api/users/profile",
+          requestOptions
+        );
+        const result = await response.json();
+        setNewUser(result);
+      } catch (error) {
+        console.log("error getting profile", error);
+        setError(error);
+      }
+    }
+  };
+
   useEffect(() => {
     isUserLoggedIn();
   }, [user]);
 
   return (
-    <authContext.Provider value={{ isUserLoggedIn, user, setUser, logout }}>
+    <authContext.Provider
+      value={{
+        isUserLoggedIn,
+        user,
+        setUser,
+        logout,
+        getProfile,
+        error,
+        newUser,
+        setNewUser,
+      }}
+    >
       {props.children}
     </authContext.Provider>
   );

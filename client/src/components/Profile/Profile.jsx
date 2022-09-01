@@ -3,52 +3,21 @@ import "./Profile.css";
 import { Alert, Button, TextField } from "@mui/material";
 import React, { useEffect, useState } from "react";
 
+import { authContext } from "../../contexts/authContext";
 import { formatDataYyMmDd } from "../../utils/formatDate";
 import { getToken } from "../../utils/getToken";
+import { useContext } from "react";
 
 export default function Profile() {
-  const [newUser, setNewUser] = useState({});
-  const [error, setError] = useState(null);
   const [disabled, setDisabled] = useState(false);
+
+  const { getProfile, error, newUser, setNewUser } = useContext(authContext);
 
   const handleChange = (e) => {
     console.log(`Typed => ${e.target.value}`);
     setNewUser({ ...newUser, [e.target.name]: e.target.value });
   };
   console.log("newUser", newUser);
-
-  const getProfile = async () => {
-    const token = getToken();
-    if (token) {
-      const myHeaders = new Headers();
-      myHeaders.append("Authorization", `Bearer ${token}`);
-
-      const requestOptions = {
-        method: "GET",
-        headers: myHeaders,
-      };
-
-      try {
-        const response = await fetch(
-          "http://localhost:5000/api/users/profile",
-          requestOptions
-        );
-        const result = await response.json();
-        setNewUser({
-          avatarPicture: result.avatarPicture,
-          userName: result.userName,
-          firstName: result.firstName,
-          lastName: result.lastName,
-          email: result.email,
-          birthday: result.birthday,
-          id: result.id,
-        });
-      } catch (error) {
-        console.log("error getting profile", error);
-        setError(error);
-      }
-    }
-  };
 
   // UPDATE A USER BY ID
 

@@ -1,6 +1,7 @@
 import {
   getProfile,
   login,
+  makeLike,
   signUp,
   updateUser,
   uploadUserPicture,
@@ -17,6 +18,7 @@ router.post("/imageUpload", multerUploads.single("image"), uploadUserPicture);
 router.post("/signup", signUp);
 
 router.post("/login", login);
+router.post("/like", makeLike);
 
 router.get("/profile", jwtAuth, getProfile);
 router.post("/updateProfile", jwtAuth, updateUser);

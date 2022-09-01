@@ -10,6 +10,9 @@ const postsSchema = new mongoose.Schema(
     description: {
       type: String,
     },
+    likes: {
+      type: Array,
+    },
   },
   {
     timestamps: true,

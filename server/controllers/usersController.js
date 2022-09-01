@@ -1,3 +1,4 @@
+import Post from "../models/postsModel.js";
 import User from "../models/usersModel.js";
 import bcrypt from "bcrypt";
 import { v2 as cloudinary } from "cloudinary";
@@ -123,21 +124,47 @@ const login = async (req, res) => {
   }
 };
 
+const makeLike = async (req, res) => {
+  console.log("req", req.body);
+
+  try {
+    const updatePost = await Post.findByIdAndUpdate(
+      req.body.postId,
+      {
+        $pull: { likes: req.body.userId },
+      },
+      { new: true, overwrite: false }
+    );
+    console.log("updatePost", updatePost);
+    const updateUser = await User.findByIdAndUpdate(
+      req.body.userId,
+      {
+        $pull: { likes: req.body.postId },
+      },
+      { new: true, overwrite: false }
+    );
+    console.log("updateUser", updateUser);
+    res.status(200).json({
+      message: "like updated",
+      updatePost,
+      updateUser,
+    });
+    console.log("updatePost", updatePost);
+  } catch (error) {
+    console.log("error", error);
+    res.status(409).json({
+      message: error,
+    });
+  }
+};
+
 const getProfile = (req, res) => {
-  console.log("req", req.user);
-  res.status(200).json({
-    firstName: req.user.firstName,
-    lastName: req.user.lastName,
-    email: req.user.email,
-    userName: req.user.userName,
-    avatarPicture: req.user.avatarPicture,
-  });
+  res.status(200).json(req.user);
 };
 
 // UPDATE A USER BY ID
 
 const updateUser = async (req, res) => {
-  console.log("req.user", req.user);
   try {
     const updatedUser = await User.findByIdAndUpdate(req.user.id, {
       userName: req.body.userName,
@@ -157,4 +184,4 @@ const updateUser = async (req, res) => {
   }
 };
 
-export { uploadUserPicture, signUp, login, getProfile, updateUser };
+export { uploadUserPicture, signUp, login, getProfile, updateUser, makeLike };

@@ -30,6 +30,10 @@ const usersSchema = new mongoose.Schema({
     type: String,
     required: false,
   },
+  likes: {
+    type: Array,
+    required: false,
+  },
 });
 
 const User = mongoose.model("user", usersSchema);

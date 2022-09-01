@@ -1,0 +1,32 @@
+.post-container {
+  display: flex;
+  flex-direction: column;
+  text-align: start;
+  margin-bottom: 2em;
+  border-bottom: 1px grey solid;
+  width: 390px;
+}
+
+.post-container:first-child {
+  margin-top: 50px;
+}
+
+.post-container:last-child {
+  margin-bottom: 70px;
+}
+
+.post-container p {
+  margin: 0;
+  padding: 0 10px;
+}
+
+.post-container-image {
+  background-color: grey;
+  width: 390px;
+  height: 390px;
+}
+
+.post-container-bottom {
+  display: flex;
+  justify-content: space-between;
+}

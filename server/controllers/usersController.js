@@ -127,20 +127,41 @@ const login = async (req, res) => {
 const makeLike = async (req, res) => {
   console.log("req", req.body);
 
+  const post = await Post.findById(req.body.postId);
+  console.log("LIKES", post.likes);
+  const user = await User.findById(req.body.userId);
+  console.log("LIKES", user);
+
+  const postOption = post.likes.includes(req.body.userId)
+    ? {
+        $pull: { likes: req.body.userId },
+      }
+    : {
+        $addToSet: {
+          likes: req.body.userId,
+        },
+      };
+  const userOption = user.likes.includes(req.body.postId)
+    ? {
+        $pull: { likes: req.body.postId },
+      }
+    : {
+        $addToSet: {
+          likes: req.body.postId,
+        },
+      };
+
   try {
     const updatePost = await Post.findByIdAndUpdate(
       req.body.postId,
-      {
-        $pull: { likes: req.body.userId },
-      },
+      postOption,
+
       { new: true, overwrite: false }
     );
     console.log("updatePost", updatePost);
     const updateUser = await User.findByIdAndUpdate(
       req.body.userId,
-      {
-        $pull: { likes: req.body.postId },
-      },
+      userOption,
       { new: true, overwrite: false }
     );
     console.log("updateUser", updateUser);

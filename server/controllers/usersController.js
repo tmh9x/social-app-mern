@@ -126,6 +126,7 @@ const login = async (req, res) => {
 
 const makeLike = async (req, res) => {
   console.log("req", req.body);
+  console.log("req2", req);
 
   const post = await Post.findById(req.body.postId);
   console.log("LIKES", post.likes);
@@ -155,7 +156,6 @@ const makeLike = async (req, res) => {
     const updatePost = await Post.findByIdAndUpdate(
       req.body.postId,
       postOption,
-
       { new: true, overwrite: false }
     );
     console.log("updatePost", updatePost);
@@ -180,6 +180,7 @@ const makeLike = async (req, res) => {
 };
 
 const getProfile = (req, res) => {
+  console.log("get profile", req.user);
   res.status(200).json(req.user);
 };
 
@@ -193,6 +194,7 @@ const updateUser = async (req, res) => {
       lastName: req.body.lastName,
       email: req.body.email,
       birthday: req.body.birthday,
+      avatarPicture: req.body.avatarPicture,
     });
     console.log("updatedUser: ", updatedUser);
     res.status(200).json({

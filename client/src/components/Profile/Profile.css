@@ -8,14 +8,19 @@
 .profile-container-content {
   display: flex;
   flex-direction: column;
+  text-align: center;
   gap: 1em;
 }
 
+.profile-container-content > input {
+  display: flex;
+  justify-content: center;
+}
+
 .profile-container-image {
-  margin: 0 auto;
   justify-self: center;
-  border: 1px solid black;
   border-radius: 50%;
   height: 150px;
   width: 150px;
+  object-fit: contain;
 }

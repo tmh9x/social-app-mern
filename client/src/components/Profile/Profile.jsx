@@ -9,9 +9,13 @@ import { getToken } from "../../utils/getToken";
 import { useContext } from "react";
 
 export default function Profile() {
-  const [disabled, setDisabled] = useState(false);
-
+  const [disabled, setDisabled] = useState(true);
+  const [selectedFile, setSelectedFile] = useState(null);
   const { getProfile, error, newUser, setNewUser } = useContext(authContext);
+
+  const handleFile = (e) => {
+    setSelectedFile(e.target.files[0]);
+  };
 
   const handleChange = (e) => {
     console.log(`Typed => ${e.target.value}`);
@@ -19,9 +23,29 @@ export default function Profile() {
   };
   console.log("newUser", newUser);
 
+  const uploadImage = async () => {
+    const formData = new FormData();
+    formData.append("image", selectedFile);
+
+    const requestOptions = {
+      method: "POST",
+      body: formData,
+    };
+    try {
+      const response = await fetch(
+        "http://localhost:5000/api/posts/imageUpload",
+        requestOptions
+      );
+      const result = await response.json();
+      console.log("result", result);
+      return result.imageUrl;
+    } catch (error) {}
+  };
+
   // UPDATE A USER BY ID
 
   const updateUser = async () => {
+    const img = await uploadImage();
     const token = getToken();
     console.log("token", token);
     let urlencoded = new URLSearchParams();
@@ -30,8 +54,9 @@ export default function Profile() {
     urlencoded.append("birthday", newUser.birthday);
     urlencoded.append("firstName", newUser.firstName);
     urlencoded.append("lastName", newUser.lastName);
-    console.log("newUser.birthday", newUser.birthday);
-    var requestOptions = {
+    urlencoded.append("avatarPicture", img);
+
+    const requestOptions = {
       method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -46,6 +71,7 @@ export default function Profile() {
       );
       const results = await response.json();
       console.log("results", results);
+      getProfile();
     } catch (error) {
       console.log("error", error);
     }
@@ -73,6 +99,12 @@ export default function Profile() {
               alt=""
             />
           </div>
+
+          {disabled === false && (
+            <div>
+              <input id="upload" type="file" onChange={handleFile} />
+            </div>
+          )}
 
           <div>
             <TextField

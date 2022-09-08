@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 export const authContext = createContext();
 
 export function AuthContextProvider(props) {
-  const [user, setUser] = useState();
+  const [user, setUser] = useState(false);
   const [newUser, setNewUser] = useState({});
   const [error, setError] = useState(null);
 
@@ -14,8 +14,10 @@ export function AuthContextProvider(props) {
 
   const isUserLoggedIn = () => {
     const token = getToken();
+    console.log("token", token);
     if (token) {
       setUser(true);
+      getProfile();
       console.log("you are already logged in");
     } else {
       setUser(false);

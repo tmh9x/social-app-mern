@@ -4,10 +4,15 @@ import React, { useState } from "react";
 
 import Button from "@mui/material/Button";
 import TextareaAutosize from "@mui/material/TextareaAutosize";
+import { getToken } from "../../utils/getToken";
+import { useNavigate } from "react-router-dom";
 
 export default function CreatePost() {
   const [selectedFile, setSelectedFile] = useState(null);
-  const [newPost, setNewPost] = useState({});
+  const [description, setDescription] = useState("");
+  console.log("abc", description);
+
+  const navigate = useNavigate();
 
   const handleFile = (e) => {
     setSelectedFile(e.target.files[0]);
@@ -15,11 +20,18 @@ export default function CreatePost() {
 
   const handleChange = (e) => {
     console.log(`Typed => ${e.target.value}`);
-    setNewPost({ ...newPost, [e.target.name]: e.target.value });
+    setDescription(e.target.value);
   };
 
-  const submitForm = async (e) => {
-    e.preventDefault();
+  const createHeader = () => {
+    const token = getToken();
+    console.log("token", token);
+    const myHeaders = new Headers();
+    myHeaders.append("Authorization", `Bearer ${token}`);
+    return myHeaders;
+  };
+
+  const uploadImage = async () => {
     const formData = new FormData();
     formData.append("image", selectedFile);
 
@@ -33,28 +45,45 @@ export default function CreatePost() {
         requestOptions
       );
       const result = await response.json();
-      setNewPost({ ...newPost, newPostPicture: result.imageUrl });
+      console.log("result", result);
+      return result.imageUrl;
     } catch (error) {}
   };
 
   const post = async () => {
-    let urlencoded = new URLSearchParams();
-    urlencoded.append("description", newPost.description);
-    urlencoded.append("newPostPicture", newPost.newPostPicture);
-    const requestOptions = {
-      method: "POST",
-      body: urlencoded,
-    };
+    const img = await uploadImage();
 
-    try {
-      const response = await fetch(
-        "http://localhost:5000/api/posts/createPost",
-        requestOptions
-      );
-      const results = await response.json();
-      console.log("results", results);
-    } catch (error) {
-      console.log("error", error);
+    let urlencoded = new URLSearchParams();
+    console.log("NEWPOST", description);
+    urlencoded.append("description", description);
+    urlencoded.append("newPostPicture", img);
+    const token = getToken();
+    console.log("token", token);
+
+    if (token) {
+      const myHeaders = new Headers();
+      myHeaders.append("Authorization", `Bearer ${token}`);
+
+      myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
+      const requestOptions = {
+        method: "POST",
+        body: urlencoded,
+        headers: myHeaders,
+        redirect: "follow",
+      };
+      console.log("createHeader", createHeader());
+      try {
+        const response = await fetch(
+          "http://localhost:5000/api/posts/createPost",
+          requestOptions
+        );
+        console.log("response", response);
+        const results = await response.text();
+        console.log("results", results);
+        navigate("/posts");
+      } catch (error) {
+        console.log("error", error);
+      }
     }
   };
 
@@ -68,14 +97,9 @@ export default function CreatePost() {
           <div className="upload-container">
             <label htmlFor="upload"></label>
             <input id="upload" type="file" onChange={handleFile} />
-            {newPost.newPostPicture && (
-              <img src={newPost.newPostPicture} alt="post" width="100px" />
+            {description.newPostPicture && (
+              <img src={description.newPostPicture} alt="post" width="100px" />
             )}
-          </div>
-          <div>
-            <Button variant="outlined" size="small" onClick={submitForm}>
-              upload
-            </Button>
           </div>
         </form>
       </div>

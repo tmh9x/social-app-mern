@@ -20,8 +20,7 @@ export default function SignUp() {
     setNewUser({ ...newUser, [e.target.name]: e.target.value });
   };
 
-  const submitForm = async (e) => {
-    e.preventDefault();
+  const uploadImage = async () => {
     const formData = new FormData();
     formData.append("image", selectedFile);
 
@@ -36,11 +35,14 @@ export default function SignUp() {
         requestOptions
       );
       const result = await response.json();
-      setNewUser({ ...newUser, avatarPicture: result.imageUrl });
+
+      return result.imageUrl;
     } catch (error) {}
   };
 
   const signUp = async () => {
+    const img = await uploadImage();
+
     let urlencoded = new URLSearchParams();
     urlencoded.append("userName", newUser.userName);
     urlencoded.append("firstName", newUser.firstName);
@@ -51,8 +53,8 @@ export default function SignUp() {
 
     urlencoded.append(
       "avatarPicture",
-      newUser.avatarPicture
-        ? newUser.avatarPicture
+      img
+        ? img
         : "https://www.kindpng.com/picc/m/24-248253_user-profile-default-image-png-clipart-png-download.png"
     );
     const requestOptions = {
@@ -163,24 +165,10 @@ export default function SignUp() {
       <div>
         <form>
           <div className="upload-container">
-            <label htmlFor="upload">
-              {/*  <img src={Upload} alt="" width="70px" /> */}
-            </label>
-            <input
-              id="upload"
-              type="file"
-              onChange={handleFile}
-
-              /*  style={{ display: "none" }} */
-            />
+            <input id="upload" type="file" onChange={handleFile} />
             {newUser.avatarPicture && (
               <img src={newUser.avatarPicture} alt="userPic" width="100px" />
             )}
-          </div>
-          <div>
-            <Button variant="outlined" size="small" onClick={submitForm}>
-              upload
-            </Button>
           </div>
         </form>
       </div>

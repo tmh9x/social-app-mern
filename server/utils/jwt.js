@@ -6,7 +6,7 @@ dotenv.config();
 
 const issueToken = (userId) => {
   const signOptions = {
-    expiresIn: "1 h",
+    expiresIn: "5 h",
   };
 
   const payload = {

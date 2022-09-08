@@ -1,17 +1,28 @@
 import {
+  createMessage,
   createPost,
+  deletePost,
   getPosts,
   uploadPostPicture,
 } from "../controllers/postsController.js";
 
 import express from "express";
+import jwtAuth from "../utils/jwtAuth.js";
 import { multerUploads } from "../middlewares/multer.js";
 
 const router = express.Router();
 
 router.get("/all", getPosts);
 
-router.post("/imageUpload", multerUploads.single("image"), uploadPostPicture);
-router.post("/createPost", createPost);
+router.post(
+  "/imageUpload",
+  /*  jwtAuth, */
+  multerUploads.single("image"),
+  uploadPostPicture
+);
+router.post("/createPost", jwtAuth, createPost);
+router.post("/deletePost", deletePost);
+
+router.post("/message", createMessage);
 
 export default router;

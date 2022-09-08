@@ -15,7 +15,8 @@
   margin-bottom: 70px;
 }
 
-.post-container p {
+.post-container p,
+h3 {
   margin: 0;
   padding: 0 10px;
 }
@@ -26,7 +27,53 @@
   height: 390px;
 }
 
+.post-container-top {
+  display: flex;
+  justify-content: space-between;
+  padding-right: 10px;
+  align-items: center;
+}
+
+.post-container-top img {
+  vertical-align: middle;
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+}
+
 .post-container-bottom {
   display: flex;
   justify-content: space-between;
+  align-items: center;
+}
+
+.likeButton {
+  margin-right: 10px;
+}
+
+.post-container-messages {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+}
+
+.post-container-messages-header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.chat-container-accordion {
+  width: 350px;
+  align-self: center;
+}
+
+.chat-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.post-container-input {
+  display: flex;
+  justify-content: center;
+  margin: 1em auto;
 }

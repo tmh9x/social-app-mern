@@ -21,7 +21,7 @@ router.post(
   uploadPostPicture
 );
 router.post("/createPost", jwtAuth, createPost);
-router.post("/deletePost", deletePost);
+router.post("/deletePost", jwtAuth, deletePost);
 
 router.post("/message", createMessage);
 

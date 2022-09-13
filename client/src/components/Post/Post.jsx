@@ -14,9 +14,11 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import FavoriteOutlinedIcon from "@mui/icons-material/FavoriteOutlined";
+import { Link } from "react-router-dom";
 import SendIcon from "@mui/icons-material/Send";
 import { authContext } from "../../contexts/authContext";
 import { formatDataYyMmDd } from "../../utils/formatDate";
+import { getToken } from "../../utils/getToken";
 import { postsContext } from "../../contexts/postsContext";
 
 export default function Post(post) {
@@ -30,6 +32,8 @@ export default function Post(post) {
     console.log(`Typed => ${e.target.value}`);
     setChatMsg(e.target.value);
   };
+
+  console.log("USER", newUser._id);
 
   const handleSendMsg = async (e) => {
     const newChatMsg = {
@@ -59,22 +63,30 @@ export default function Post(post) {
   };
 
   const handleDelete = async () => {
-    let urlencoded = new URLSearchParams();
-    const requestOptions = {
-      method: "POST",
-      body: urlencoded,
-    };
+    const token = getToken();
+    if (token) {
+      const myHeaders = new Headers();
+      myHeaders.append("Authorization", `Bearer ${token}`);
 
-    try {
-      const response = await fetch(
-        "http://localhost:5000/api/posts/deletePost",
-        requestOptions
-      );
-      const results = await response.json();
-      console.log("results", results);
-      getAllPosts();
-    } catch (error) {
-      console.error("Error adding message: ", error);
+      myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
+      let urlencoded = new URLSearchParams();
+      const requestOptions = {
+        method: "POST",
+        body: urlencoded,
+        headers: myHeaders,
+      };
+
+      try {
+        const response = await fetch(
+          "http://localhost:5000/api/posts/deletePost",
+          requestOptions
+        );
+        const results = await response.json();
+        console.log("results", results);
+        getAllPosts();
+      } catch (error) {
+        console.error("Error adding message: ", error);
+      }
     }
   };
 
@@ -122,7 +134,9 @@ export default function Post(post) {
             <p>{post.post.description}</p>
           </div>
           <div>
-            <img src={post.post.author.avatarPicture} />
+            <Link to="/profile">
+              <img src={post.post.author.avatarPicture} />
+            </Link>
           </div>
         </div>
 
@@ -166,14 +180,27 @@ export default function Post(post) {
               </AccordionSummary>
               <AccordionDetails>
                 {post.post.messages &&
-                  post.post.messages.map((e, i) => (
+                  post.post.messages.map((message, i) => (
                     <div key={i} className="post-container-messages">
                       <div className="post-container-messages-header">
-                        <h3>{post.post.author.userName}</h3>
-                        <p>{formatDataYyMmDd(e.date)}</p>
+                        <img
+                          src=""
+                          alt=""
+                          style={{
+                            width: "30px",
+                            height: "30px",
+                            marginRight: "10px",
+                          }}
+                        />
+                        <div className="post-container-messages-text">
+                          <h3>{message.userId}</h3>
+                          <p>{formatDataYyMmDd(message.date)}</p>
+                        </div>
                       </div>
 
-                      <p>{e.message}</p>
+                      <div>
+                        <p>{message.message}</p>
+                      </div>
                     </div>
                   ))}
               </AccordionDetails>
@@ -187,16 +214,17 @@ export default function Post(post) {
                   variant="outlined"
                   size="small"
                   onChange={handleMsg}
-                  /*   onKeyUp={handleSubmit} */
                   type="text"
                   value={chatMsg}
                 />
               </div>
+
               <div>
                 <IconButton onClick={handleSendMsg}>
                   <SendIcon />
                 </IconButton>
               </div>
+
               <div>
                 <IconButton onClick={handleDelete}>
                   <DeleteIcon />

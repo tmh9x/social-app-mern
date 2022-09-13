@@ -51,15 +51,23 @@ h3 {
   margin-right: 10px;
 }
 
-.post-container-messages {
+.post-container-messages-header {
   display: flex;
-  flex-direction: column;
   margin-bottom: 10px;
 }
 
-.post-container-messages-header {
+.post-container-messages {
+  padding-bottom: 0.5em;
+}
+
+.post-container-messages-text {
   display: flex;
   justify-content: space-between;
+  padding: 3px 3px;
+  border-radius: 2em;
+  background: linear-gradient(45deg, #ffcaa6, #f86594);
+  font-size: small;
+  width: 70%;
 }
 
 .chat-container-accordion {
@@ -74,6 +82,6 @@ h3 {
 
 .post-container-input {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   margin: 1em auto;
 }

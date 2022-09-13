@@ -24,10 +24,20 @@
   width: 40px;
 }
 
-.appbar-container-online-status {
+.appbar-container-status {
   justify-self: end;
   margin-right: 1em;
+}
+
+.appbar-container-status-online {
   background-color: greenyellow;
+  border-radius: 50%;
+  width: 10px;
+  height: 10px;
+}
+
+.appbar-container-status-offline {
+  background-color: red;
   border-radius: 50%;
   width: 10px;
   height: 10px;

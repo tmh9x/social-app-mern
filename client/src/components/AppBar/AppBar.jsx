@@ -18,8 +18,10 @@ import SendIcon from "@mui/icons-material/Send";
 import SettingsIcon from "@mui/icons-material/Settings";
 import SwipeableDrawer from "@mui/material/SwipeableDrawer";
 import { authContext } from "../../contexts/authContext";
+import { getToken } from "../../utils/getToken";
 
 export default function NavBar() {
+  const token = getToken();
   const { logout } = useContext(authContext);
 
   const [state, setState] = useState({
@@ -46,25 +48,6 @@ export default function NavBar() {
       onKeyDown={toggleDrawer(anchor, false)}
     >
       <List>
-        <Link to="/chat">
-          <ListItem disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                <SendIcon />
-              </ListItemIcon>
-              <ListItemText primary="Chat" />
-            </ListItemButton>
-          </ListItem>
-        </Link>
-        <ListItem disablePadding>
-          <ListItemButton>
-            <ListItemIcon>
-              <SettingsIcon />
-            </ListItemIcon>
-            <ListItemText primary="Settings" />
-          </ListItemButton>
-        </ListItem>
-        <Divider />
         <ListItem disablePadding>
           <ListItemButton onClick={logout}>
             <ListItemIcon>
@@ -97,7 +80,7 @@ export default function NavBar() {
               edge="start"
               color="inherit"
               aria-label="menu"
-              sx={{ mr: 2 }}
+              sx={{ mr: 6 }}
             >
               <MenuIcon />
             </IconButton>
@@ -114,10 +97,16 @@ export default function NavBar() {
       </div>
 
       <div>
-        <h2>social-app</h2>
+        <h2>socialize</h2>
       </div>
 
-      <div className="appbar-container-online-status"></div>
+      <div className="appbar-container-status">
+        {token ? (
+          <div className="appbar-container-status-online"></div>
+        ) : (
+          <div className="appbar-container-status-offline"></div>
+        )}
+      </div>
     </div>
   );
 }

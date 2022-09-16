@@ -50,7 +50,7 @@ export default function Post(post) {
 
     try {
       const response = await fetch(
-        "http://localhost:5000/api/posts/message",
+        "https://social-app-mern-backend-tmh9x.vercel.app/api/posts/message",
         requestOptions
       );
       const results = await response.json();
@@ -78,7 +78,7 @@ export default function Post(post) {
 
       try {
         const response = await fetch(
-          "http://localhost:5000/api/posts/deletePost",
+          "https://social-app-mern-backend-tmh9x.vercel.app/api/posts/deletePost",
           requestOptions
         );
         const results = await response.json();
@@ -108,7 +108,7 @@ export default function Post(post) {
 
     try {
       const response = await fetch(
-        "http://localhost:5000/api/users/like",
+        "https://social-app-mern-backend-tmh9x.vercel.app/api/users/like",
         requestOptions
       );
       const result = await response.json();

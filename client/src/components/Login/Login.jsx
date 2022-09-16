@@ -26,7 +26,7 @@ export default function Login() {
     };
     try {
       const response = await fetch(
-        "http://localhost:5000/api/users/login",
+        "https://social-app-mern-backend-tmh9x.vercel.app/api/users/login",
         requestOptions
       );
       const result = await response.json();

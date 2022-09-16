@@ -44,7 +44,7 @@ export function AuthContextProvider(props) {
 
       try {
         const response = await fetch(
-          "http://localhost:5000/api/users/profile",
+          "https://social-app-mern-backend-tmh9x.vercel.app/api/users/profile",
           requestOptions
         );
         const result = await response.json();

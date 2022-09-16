@@ -31,7 +31,7 @@ export default function SignUp() {
 
     try {
       const response = await fetch(
-        "http://localhost:5000/api/users/imageUpload",
+        "https://social-app-mern-backend-tmh9x.vercel.app/api/users/imageUpload",
         requestOptions
       );
       const result = await response.json();
@@ -64,7 +64,7 @@ export default function SignUp() {
 
     try {
       const response = await fetch(
-        "http://localhost:5000/api/users/signup",
+        "https://social-app-mern-backend-tmh9x.vercel.app/api/users/signup",
         requestOptions
       );
       const results = await response.json();

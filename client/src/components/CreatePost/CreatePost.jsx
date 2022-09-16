@@ -41,7 +41,7 @@ export default function CreatePost() {
     };
     try {
       const response = await fetch(
-        "http://localhost:5000/api/posts/imageUpload",
+        "https://social-app-mern-backend-tmh9x.vercel.app/api/posts/imageUpload",
         requestOptions
       );
       const result = await response.json();
@@ -74,7 +74,7 @@ export default function CreatePost() {
       console.log("createHeader", createHeader());
       try {
         const response = await fetch(
-          "http://localhost:5000/api/posts/createPost",
+          "https://social-app-mern-backend-tmh9x.vercel.app/api/posts/createPost",
           requestOptions
         );
         console.log("response", response);

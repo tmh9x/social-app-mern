@@ -33,7 +33,7 @@ export default function Profile() {
     };
     try {
       const response = await fetch(
-        "http://localhost:5000/api/posts/imageUpload",
+        "https://social-app-mern-backend-tmh9x.vercel.app/api/posts/imageUpload",
         requestOptions
       );
       const result = await response.json();
@@ -66,7 +66,7 @@ export default function Profile() {
 
     try {
       const response = await fetch(
-        "http://localhost:5000/api/users/updateProfile",
+        "https://social-app-mern-backend-tmh9x.vercel.app/api/users/updateProfile",
         requestOptions
       );
       const results = await response.json();
